@@ -26,7 +26,7 @@ pub enum NetworkCommand {
         passphrase: String,
     },
     Disconnect {
-        ssid: String
+        ssid: String,
     },
 }
 
