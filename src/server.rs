@@ -248,10 +248,10 @@ fn connect(req: &mut Request) -> IronResult<Response> {
 }
 
 fn disconnect(req: &mut Request) -> IronResult<Response> {
-    let (ssid) = {
+    let ssid = {
         let params = get_request_ref!(req, Params, "Getting request params failed");
         let ssid = get_param!(params, "ssid", String);
-        (ssid)
+        ssid
     };
 
     debug!("Incoming `disconnect` to access point `{}` request", ssid);
