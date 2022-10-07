@@ -233,9 +233,7 @@ fn disconnect(req: &mut Request) -> IronResult<Response> {
 
     let request_state = get_request_state!(req);
 
-    let command = NetworkCommand::Disconnect {
-        ssid: ssid
-    };
+    let command = NetworkCommand::Disconnect { ssid: ssid };
 
     if let Err(e) = request_state.network_tx.send(command) {
         exit_with_error(&request_state, e, ErrorKind::SendNetworkCommandConnect)

@@ -27,7 +27,7 @@ pub enum NetworkCommand {
     },
     Disconnect {
         ssid: String
-    }
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -180,9 +180,7 @@ impl NetworkCommandHandler {
                         return Ok(());
                     }
                 },
-                NetworkCommand::Disconnect {
-                    ssid
-                } => {
+                NetworkCommand::Disconnect { ssid } => {
                     if self.disconnect(&ssid)? {
                         return Ok(());
                     }
