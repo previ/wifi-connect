@@ -220,31 +220,6 @@ fn connect(req: &mut Request) -> IronResult<Response> {
     } else {
         Ok(Response::with(status::Ok))
     }
-
-fn connect(req: &mut Request) -> IronResult<Response> {
-    let (ssid, identity, passphrase) = {
-        let params = get_request_ref!(req, Params, "Getting request params failed");
-        let ssid = get_param!(params, "ssid", String);
-        let identity = get_param!(params, "identity", String);
-        let passphrase = get_param!(params, "passphrase", String);
-        (ssid, identity, passphrase)
-    };
-
-    debug!("Incoming `connect` to access point `{}` request", ssid);
-
-    let request_state = get_request_state!(req);
-
-    let command = NetworkCommand::Connect {
-        ssid: ssid,
-        identity: identity,
-        passphrase: passphrase,
-    };
-
-    if let Err(e) = request_state.network_tx.send(command) {
-        exit_with_error(&request_state, e, ErrorKind::SendNetworkCommandConnect)
-    } else {
-        Ok(Response::with(status::Ok))
-    }
 }
 
 fn disconnect(req: &mut Request) -> IronResult<Response> {
