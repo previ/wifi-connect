@@ -30,6 +30,7 @@ build: &build
         echo "export ARCHIVE_PATH=$ARCHIVE_PATH" >> $BASH_ENV
 
     - run: mkdir -p pack /tmp/dist
+    - run: mkdir -p pack /tmp/dist/wifi-connect-rel
     - run: mv target/$TARGET/release/$BINARY pack/$BINARY
     - run: cp -R ui/build pack/ui
     - run: tar -czvf $ARCHIVE_PATH -C pack .
