@@ -1,12 +1,12 @@
 [package]
 name = "wifi-connect"
-version = "4.6.0"
+version = "4.4.6"
 authors = ["Zahari Petkov <zahari@balena.io>"]
 description = "Easy WiFi setup for Linux devices from your mobile phone or laptop"
 
 [dependencies]
 network-manager = "0.11"
-clap = "2.34"
+clap = "2.24"
 iron = "0.6"
 iron-cors = "0.7"
 staticfile = "0.5"
@@ -19,7 +19,7 @@ persistent = "0.4"
 params = "0.8"
 log = "0.3"
 env_logger = "0.4"
-nix = "0.24"
+nix = "0.10"
 
 [dependencies.error-chain]
 version = "0.11"
