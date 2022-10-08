@@ -144,6 +144,7 @@ pub fn start_server(
     router.get("/", Static::new(ui_directory), "index");
     router.get("/networks", networks, "networks");
     router.post("/connect", connect, "connect");
+    router.post("/disconnect", disconnect, "disconnect");
 
     let mut assets = Mount::new();
     assets.mount("/", router);
@@ -213,6 +214,26 @@ fn connect(req: &mut Request) -> IronResult<Response> {
         identity: identity,
         passphrase: passphrase,
     };
+
+    if let Err(e) = request_state.network_tx.send(command) {
+        exit_with_error(&request_state, e, ErrorKind::SendNetworkCommandConnect)
+    } else {
+        Ok(Response::with(status::Ok))
+    }
+}
+
+fn disconnect(req: &mut Request) -> IronResult<Response> {
+    let ssid = {
+        let params = get_request_ref!(req, Params, "Getting request params failed");
+        let ssid = get_param!(params, "ssid", String);
+        ssid
+    };
+
+    debug!("Incoming `disconnect` to access point `{}` request", ssid);
+
+    let request_state = get_request_state!(req);
+
+    let command = NetworkCommand::Disconnect { ssid: ssid };
 
     if let Err(e) = request_state.network_tx.send(command) {
         exit_with_error(&request_state, e, ErrorKind::SendNetworkCommandConnect)

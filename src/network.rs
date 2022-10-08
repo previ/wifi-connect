@@ -25,6 +25,9 @@ pub enum NetworkCommand {
         identity: String,
         passphrase: String,
     },
+    Disconnect {
+        ssid: String,
+    },
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -177,6 +180,11 @@ impl NetworkCommandHandler {
                         return Ok(());
                     }
                 },
+                NetworkCommand::Disconnect { ssid } => {
+                    if self.disconnect(&ssid)? {
+                        return Ok(());
+                    }
+                },
             }
         }
     }
@@ -261,6 +269,16 @@ impl NetworkCommandHandler {
                 },
             }
         }
+
+        self.access_points = get_access_points(&self.device)?;
+
+        self.portal_connection = Some(create_portal(&self.device, &self.config)?);
+
+        Ok(false)
+    }
+
+    fn disconnect(&mut self, ssid: &str) -> Result<bool> {
+        delete_existing_connections_to_same_network(&self.manager, ssid);
 
         self.access_points = get_access_points(&self.device)?;
 
