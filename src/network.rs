@@ -329,7 +329,9 @@ pub fn process_network_commands(config: &Config, exit_tx: &Sender<ExitResult>) {
 pub fn init_networking(config: &Config) -> Result<()> {
     start_network_manager_service()?;
     let _ = config; // unused config
+
     //delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
+
     Ok(())
 }
 
