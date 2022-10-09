@@ -274,8 +274,7 @@ impl NetworkCommandHandler {
         }
         self.access_points = get_access_points(&self.device)?;
 
-        // No connection, recreate access point
-        //self.portal_connection = Some(create_portal(&self.device, &self.config)?);
+        self.portal_connection = Some(create_portal(&self.device, &self.config)?);
 
         Ok(false)
     }
