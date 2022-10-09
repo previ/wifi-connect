@@ -203,10 +203,11 @@ impl NetworkCommandHandler {
     fn stop(&mut self, exit_tx: &Sender<ExitResult>, result: ExitResult) {
         let _ = stop_dnsmasq(&mut self.dnsmasq);
 
+        /*
         if let Some(ref connection) = self.portal_connection {
             let _ = stop_portal_impl(connection, &self.config);
         }
-
+        */
         let _ = exit_tx.send(result);
     }
 
@@ -330,7 +331,7 @@ pub fn init_networking(config: &Config) -> Result<()> {
     start_network_manager_service()?;
     let _ = config; // unused config
 
-    //delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
+    delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
 
     Ok(())
 }
