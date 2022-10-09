@@ -65,7 +65,8 @@ impl NetworkCommandHandler {
 
         let access_points = get_access_points(&device)?;
 
-        let portal_connection = Some(create_portal(&device, config)?);
+        //let portal_connection = Some(create_portal(&device, config)?);
+        let portal_connection = Some(());
 
         let dnsmasq = start_dnsmasq(config, &device)?;
 
@@ -271,10 +272,10 @@ impl NetworkCommandHandler {
                 },
             }
         }
-
         self.access_points = get_access_points(&self.device)?;
 
-        self.portal_connection = Some(create_portal(&self.device, &self.config)?);
+        // No connection, recreate access point
+        //self.portal_connection = Some(create_portal(&self.device, &self.config)?);
 
         Ok(false)
     }
@@ -331,7 +332,8 @@ pub fn init_networking(config: &Config) -> Result<()> {
     start_network_manager_service()?;
     let _ = config; // unused config
 
-    delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
+    //delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
+    Ok(())
 }
 
 pub fn find_device(manager: &NetworkManager, interface: &Option<String>) -> Result<Device> {
