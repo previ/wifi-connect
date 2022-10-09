@@ -330,6 +330,7 @@ pub fn init_networking(config: &Config) -> Result<()> {
     start_network_manager_service()?;
 
     //delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
+    Ok(())
 }
 
 pub fn find_device(manager: &NetworkManager, interface: &Option<String>) -> Result<Device> {
