@@ -6,7 +6,7 @@ trap "exit 1" TERM
 export TOP_PID=$$
 
 : "${APPNAME:=deploy}"
-: "${CIRCLE_FULL_ENDPOINT:=https://circleci.com/api/v2/project/gh/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME}"
+: "${CIRCLE_FULL_ENDPOINT:=https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME}"
 : "${CIRCLE_TAG:=}"
 
 main() {
