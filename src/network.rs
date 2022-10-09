@@ -223,11 +223,12 @@ impl NetworkCommandHandler {
     fn connect(&mut self, ssid: &str, identity: &str, passphrase: &str) -> Result<bool> {
         delete_existing_connections_to_same_network(&self.manager, ssid);
 
+        /*
         if let Some(ref connection) = self.portal_connection {
             stop_portal(connection, &self.config)?;
         }
-
         self.portal_connection = None;
+        */
 
         self.access_points = get_access_points(&self.device)?;
 
@@ -328,7 +329,7 @@ pub fn process_network_commands(config: &Config, exit_tx: &Sender<ExitResult>) {
 pub fn init_networking(config: &Config) -> Result<()> {
     start_network_manager_service()?;
 
-    delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
+    //delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
 }
 
 pub fn find_device(manager: &NetworkManager, interface: &Option<String>) -> Result<Device> {
