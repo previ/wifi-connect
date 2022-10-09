@@ -66,7 +66,7 @@ impl NetworkCommandHandler {
         let access_points = get_access_points(&device)?;
 
         //let portal_connection = Some(create_portal(&device, config)?);
-        let portal_connection = Some(());
+        let portal_connection = None
 
         let dnsmasq = start_dnsmasq(config, &device)?;
 
