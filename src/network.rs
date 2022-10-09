@@ -332,8 +332,6 @@ pub fn init_networking(config: &Config) -> Result<()> {
     let _ = config; // unused config
 
     delete_exising_wifi_connect_ap_profile(&config.ssid).chain_err(|| ErrorKind::DeleteAccessPoint)
-
-    Ok(())
 }
 
 pub fn find_device(manager: &NetworkManager, interface: &Option<String>) -> Result<Device> {
