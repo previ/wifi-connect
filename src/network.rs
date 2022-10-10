@@ -69,7 +69,7 @@ impl NetworkCommandHandler {
         let mut portal_connection = None;
         let mut access_points = None;
         let mut dnsmasq = None;
-        
+
         if device_state != DeviceState::Activated {
             let portal_connection = Some(create_portal(&device, config)?);
             let access_points = get_access_points(&device)?;
