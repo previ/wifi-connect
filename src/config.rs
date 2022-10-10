@@ -120,7 +120,7 @@ pub fn get_config() -> Config {
                     DEFAULT_WIFI_DEVICE
                 ))
                 .takes_value(true),
-        )        
+        )
         .get_matches();
 
     let interface: Option<String> = matches.value_of("portal-interface").map_or_else(
