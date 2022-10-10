@@ -207,7 +207,7 @@ impl NetworkCommandHandler {
         if let Some(ref connection) = self.portal_connection {
             let _ = stop_portal_impl(connection, &self.config);
         }
-        
+
         let _ = exit_tx.send(result);
     }
 
