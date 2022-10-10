@@ -5,10 +5,14 @@ use std::sync::mpsc::{channel, Receiver, Sender};
 use std::error::Error;
 use std::net::Ipv4Addr;
 use std::collections::HashSet;
+use std::net::IpAddr;
 
 use network_manager::{AccessPoint, AccessPointCredentials, Connection, ConnectionState,
                       Connectivity, Device, DeviceState, DeviceType, NetworkManager, Security,
                       ServiceState};
+
+use local_ip_address::list_afinet_netifas;
+use local_ip_address::find_ifa;
 
 use errors::*;
 use exit::{exit, trap_exit_signals, ExitResult};
@@ -63,13 +67,13 @@ impl NetworkCommandHandler {
 
         let device = find_device(&manager, &config.interface)?;
 
-        let device_state = device.get_state().unwrap();
-        println!("device state: {:?}", device_state);
+        let device_ip = get_local_ip(config.wifi_device);
+        println!("device ip: {}", device_ip);
 
         let mut portal_connection = None;
         let mut access_points = Vec::new();
 
-        if device_state != DeviceState::Activated {
+        if ! device_ip.is_some() {
             portal_connection = Some(create_portal(&device, config)?);
             access_points = get_access_points(&device)?;
         }
@@ -377,6 +381,12 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     }
 
     Ok(None)
+}
+
+fn get_local_ip(ifa_name: &str) => Option<IpAddr> {
+    let ifas = list_afinet_netifas().unwrap();
+    let (name, ip) = find_ifa(ifas, ifa_name);
+    ip
 }
 
 fn get_access_points(device: &Device) -> Result<Vec<AccessPoint>> {
