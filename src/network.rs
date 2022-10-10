@@ -104,7 +104,7 @@ impl NetworkCommandHandler {
         server_rx: Receiver<NetworkCommandResponse>,
         network_tx: Sender<NetworkCommand>,
     ) {
-        let gateway = config.gateway;
+        let gateway = Ipv4Addr::new(0, 0, 0, 0);
         let listening_port = config.listening_port;
         let exit_tx_server = exit_tx.clone();
         let ui_directory = config.ui_directory.clone();
