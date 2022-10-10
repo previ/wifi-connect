@@ -396,12 +396,13 @@ fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
             None => {
                 println!(
                     "interface {} with unsupported address family",
-                    ifaddr.interface_name);
+                    ifaddr.interface_name
+                );
                 return Null;
             },
         }
     }
- }
+}
 
 fn get_access_points(device: &Device) -> Result<Vec<AccessPoint>> {
     get_access_points_impl(device).chain_err(|| ErrorKind::NoAccessPoints)
