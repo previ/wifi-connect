@@ -70,8 +70,8 @@ impl NetworkCommandHandler {
         let mut access_points = Vec::new();
 
         if device_state != DeviceState::Activated {
-            let portal_connection = Some(create_portal(&device, config)?);
-            let access_points = get_access_points(&device)?;
+            portal_connection = Some(create_portal(&device, config)?);
+            access_points = get_access_points(&device)?;
         }
 
         let dnsmasq = start_dnsmasq(config, &device)?;
