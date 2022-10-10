@@ -63,12 +63,18 @@ impl NetworkCommandHandler {
 
         let device = find_device(&manager, &config.interface)?;
 
-        let access_points = get_access_points(&device)?;
+        let device_state = device.get_state().unwrap();
+        println!("device state: {}", device_state);
 
-        //let portal_connection = Some(create_portal(&device, config)?);
-        let portal_connection = None;
-
-        let dnsmasq = start_dnsmasq(config, &device)?;
+        let mut portal_connection = None;
+        let mut access_points = None;
+        let mut dnsmasq = None;
+        
+        if device_state != DeviceState::Activated {
+            let portal_connection = Some(create_portal(&device, config)?);
+            let access_points = get_access_points(&device)?;
+            let dnsmasq = start_dnsmasq(config, &device)?;
+        }
 
         let (server_tx, server_rx) = channel();
 
