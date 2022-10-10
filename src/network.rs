@@ -73,7 +73,7 @@ impl NetworkCommandHandler {
         let mut portal_connection = None;
         let mut access_points = Vec::new();
 
-        if ! device_ip.is_some() {
+        if ! device_ip.is_none() {
             portal_connection = Some(create_portal(&device, config)?);
             access_points = get_access_points(&device)?;
         }
