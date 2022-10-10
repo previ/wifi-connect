@@ -204,11 +204,10 @@ impl NetworkCommandHandler {
     fn stop(&mut self, exit_tx: &Sender<ExitResult>, result: ExitResult) {
         let _ = stop_dnsmasq(&mut self.dnsmasq);
 
-        /*
         if let Some(ref connection) = self.portal_connection {
             let _ = stop_portal_impl(connection, &self.config);
         }
-        */
+        
         let _ = exit_tx.send(result);
     }
 
@@ -225,12 +224,10 @@ impl NetworkCommandHandler {
     fn connect(&mut self, ssid: &str, identity: &str, passphrase: &str) -> Result<bool> {
         delete_existing_connections_to_same_network(&self.manager, ssid);
 
-        /*
         if let Some(ref connection) = self.portal_connection {
             stop_portal(connection, &self.config)?;
         }
         self.portal_connection = None;
-        */
 
         self.access_points = get_access_points(&self.device)?;
 
