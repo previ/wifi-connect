@@ -388,17 +388,17 @@ fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
     for ifaddr in addrs {
         match ifaddr.address {
             Some(address) => {
-                println!("interface {} address {}",
-                    ifaddr.interface_name, address);
+                println!("interface {} address {}", ifaddr.interface_name, address);
                 if ifaddr.interface_name == ifa_name {
                     return Some(address);
                 }
             },
             None => {
-                println!("interface {} with unsupported address family",
+                println!(
+                    "interface {} with unsupported address family",
                     ifaddr.interface_name);
                 return Null;
-            }
+            },
         }
     }
  }
