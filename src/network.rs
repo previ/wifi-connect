@@ -383,7 +383,7 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_local_ip(ifa_name: &str) => Option<IpAddr> {
+fn get_local_ip(ifa_name: &str) -> Option<IpAddr> {
     let ifas = list_afinet_netifas().unwrap();
     let (name, ip) = find_ifa(ifas, ifa_name);
     ip
