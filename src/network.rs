@@ -67,7 +67,7 @@ impl NetworkCommandHandler {
 
         let device = find_device(&manager, &config.interface)?;
 
-        let device_ip = get_local_ip(config.wifi_device);
+        let device_ip = get_ifaddr(config.wifi_device);
         println!("device ip: {}", device_ip);
 
         let mut portal_connection = None;
@@ -383,11 +383,25 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_local_ip(ifa_name: &str) -> Option<IpAddr> {
-    let ifas = list_afinet_netifas().unwrap();
-    let (name, ip) = find_ifa(ifas, ifa_name);
-    ip
-}
+fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
+    let addrs = getifaddrs().unwrap();
+    for ifaddr in addrs {
+        match ifaddr.address {
+            Some(address) => {
+                println!("interface {} address {}",
+                    ifaddr.interface_name, address);
+                if ifaddr.interface_name == ifa_name {
+                    return Some(address);
+                }
+            },
+            None => {
+                println!("interface {} with unsupported address family",
+                    ifaddr.interface_name);
+                return Null;
+            }
+        }
+    }
+ }
 
 fn get_access_points(device: &Device) -> Result<Vec<AccessPoint>> {
     get_access_points_impl(device).chain_err(|| ErrorKind::NoAccessPoints)
