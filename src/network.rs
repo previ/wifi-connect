@@ -11,8 +11,7 @@ use network_manager::{AccessPoint, AccessPointCredentials, Connection, Connectio
                       Connectivity, Device, DeviceState, DeviceType, NetworkManager, Security,
                       ServiceState};
 
-use local_ip_address::list_afinet_netifas;
-use local_ip_address::find_ifa;
+use nix::ifaddrs::getifaddrs
 
 use errors::*;
 use exit::{exit, trap_exit_signals, ExitResult};
@@ -68,7 +67,7 @@ impl NetworkCommandHandler {
         let device = find_device(&manager, &config.interface)?;
 
         let device_ip = get_ifaddr(config.wifi_device);
-        println!("device ip: {}", device_ip);
+        println!("device ip: {:?}", device_ip);
 
         let mut portal_connection = None;
         let mut access_points = Vec::new();
@@ -383,7 +382,7 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
+fn get_ifaddr(ifa_name: &str) -> Option<std::net::IpAddr> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
         match ifaddr.address {
@@ -398,10 +397,10 @@ fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
                     "interface {} with unsupported address family",
                     ifaddr.interface_name
                 );
-                return Null;
             },
         }
     }
+    return None;
 }
 
 fn get_access_points(device: &Device) -> Result<Vec<AccessPoint>> {

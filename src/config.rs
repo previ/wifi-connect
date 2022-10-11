@@ -181,7 +181,7 @@ pub fn get_config() -> Config {
         listening_port: listening_port,
         activity_timeout: activity_timeout,
         ui_directory: ui_directory,
-        wifi_device,
+        wifi_device: wifi_device,
     }
 }
 
