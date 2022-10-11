@@ -72,7 +72,7 @@ impl NetworkCommandHandler {
         let mut portal_connection = None;
         let mut access_points = Vec::new();
 
-        if device_ip.is_none() {
+        if device_sock_addr.is_none() {
             portal_connection = Some(create_portal(&device, config)?);
             access_points = get_access_points(&device)?;
         }
@@ -400,7 +400,7 @@ fn get_ifaddr(ifa_name: &str) -> Option<SockAddr> {
             },
         }
     }
-    None;
+    None
 }
 
 fn get_access_points(device: &Device) -> Result<Vec<AccessPoint>> {
