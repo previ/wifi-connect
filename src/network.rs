@@ -69,7 +69,7 @@ impl NetworkCommandHandler {
         let device = find_device(&manager, &config.interface)?;
 
         let device_if_addr = get_ifaddr(&*config.wifi_device);
-        println!("device ip: {:?}", device_if_addr);
+        println!("device ip: {}", device_if_addr.sin_addr.s_addr);
 
         let mut portal_connection = None;
         let mut access_points = Vec::new();
@@ -390,7 +390,7 @@ fn get_ifaddr(ifa_name: &str) -> Option<sockaddr_in> {
         match ifaddr.address {
             Some(SockAddr::Inet(InetAddr::V4(sockaddr_in))) => {
                 if ifaddr.interface_name == ifa_name {
-                    println!("address {}", sockaddr_in);
+                    println!("address {}", sockaddr_in.sin_addr.s_addr);
                     return Some(sockaddr_in);
                 }
             },
