@@ -11,6 +11,7 @@ use network_manager::{AccessPoint, AccessPointCredentials, Connection, Connectio
                       ServiceState};
 
 use nix::sys::socket::SockAddr;
+use nix::sys::socket::InetAddr
 use nix::ifaddrs::getifaddrs;
 
 use errors::*;
@@ -385,7 +386,7 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
 fn get_ifaddr(ifa_name: &str) -> Option<SockAddr> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
-        match ifaddr.address {
+        match ifaddr.address::InetAddr {
             Some(address) => {
                 println!("interface {} address {}", ifaddr.interface_name, address);
                 if ifaddr.interface_name == ifa_name {
