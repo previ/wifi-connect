@@ -383,13 +383,13 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_ifaddr(ifa_name: &str) -> Option<InetAddr::V4> {
+fn get_ifaddr(ifa_name: &str) -> Option<InetAddr> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
         match ifaddr.address {
-            Some(SockAddr::Inet(InetAddr::V4(inetaddr))) => {
-                println!("interface {} address {:?}", ifaddr.interface_name, inetaddr);
-                if ifaddr.interface_name == ifa_name {
+            Some(SockAddr::Inet(inetaddr)) => {
+                println!("interface {} address {}", ifaddr.interface_name, inetaddr);
+                if InetAddr::V4(inetaddr).is_some() && ifaddr.interface_name == ifa_name {
                     return Some(inetaddr);
                 }
             },
