@@ -393,7 +393,7 @@ fn get_ifaddr(ifa_name: &str) -> Option<InetAddr> {
                     return Some(inetaddr);
                 }
             },
-            _  => {
+            _ => {
                 println!("unbound to IP");
             },
             None => {
