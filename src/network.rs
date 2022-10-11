@@ -5,12 +5,12 @@ use std::sync::mpsc::{channel, Receiver, Sender};
 use std::error::Error;
 use std::net::Ipv4Addr;
 use std::collections::HashSet;
-use std::net::IpAddr;
 
 use network_manager::{AccessPoint, AccessPointCredentials, Connection, ConnectionState,
                       Connectivity, Device, DeviceState, DeviceType, NetworkManager, Security,
                       ServiceState};
 
+use nix::sys::socket::SockAddr;
 use nix::ifaddrs::getifaddrs;
 
 use errors::*;
@@ -66,8 +66,8 @@ impl NetworkCommandHandler {
 
         let device = find_device(&manager, &config.interface)?;
 
-        let device_ip = get_ifaddr(config.wifi_device);
-        println!("device ip: {:?}", device_ip);
+        let device_sock_addr = get_ifaddr(&*config.wifi_device);
+        println!("device ip: {:?}", device_sock_addr);
 
         let mut portal_connection = None;
         let mut access_points = Vec::new();
@@ -382,7 +382,7 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
+fn get_ifaddr(ifa_name: &str) -> Option<SockAddr> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
         match ifaddr.address {
