@@ -69,7 +69,6 @@ impl NetworkCommandHandler {
         let device = find_device(&manager, &config.interface)?;
 
         let device_if_addr = get_ifaddr(&*config.wifi_device);
-        println!("device ip: {}", device_if_addr.sin_addr.s_addr);
 
         let mut portal_connection = None;
         let mut access_points = Vec::new();
