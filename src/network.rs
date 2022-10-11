@@ -11,7 +11,7 @@ use network_manager::{AccessPoint, AccessPointCredentials, Connection, Connectio
                       Connectivity, Device, DeviceState, DeviceType, NetworkManager, Security,
                       ServiceState};
 
-use nix::ifaddrs::getifaddrs
+use nix::ifaddrs::getifaddrs;
 
 use errors::*;
 use exit::{exit, trap_exit_signals, ExitResult};
