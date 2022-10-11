@@ -160,7 +160,7 @@ pub fn start_server(
     chain.link_after(RedirectMiddleware);
     chain.link_around(cors_middleware);
 
-    let address = format!("localhost:{}", listening_port);
+    let address = format!("{}:{}", gateway_clone, listening_port);
 
     info!("Starting HTTP server on {}", &address);
 
@@ -226,10 +226,10 @@ fn disconnect(req: &mut Request) -> IronResult<Response> {
     let ssid = {
         let params = get_request_ref!(req, Params, "Getting request params failed");
         let ssid = get_param!(params, "ssid", String);
-        (ssid)
+        ssid
     };
 
-    debug!("Incoming `disconnect` to access point `{}` request", ssid);
+    info!("Incoming `disconnect` to access point `{}` request", ssid);
 
     let request_state = get_request_state!(req);
 
