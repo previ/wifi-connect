@@ -11,7 +11,7 @@ use network_manager::{AccessPoint, AccessPointCredentials, Connection, Connectio
                       ServiceState};
 
 use nix::sys::socket::SockAddr;
-use nix::sys::socket::InetAddr
+use nix::sys::socket::InetAddr;
 use nix::ifaddrs::getifaddrs;
 
 use errors::*;
