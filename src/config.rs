@@ -24,6 +24,7 @@ pub struct Config {
     pub listening_port: u16,
     pub activity_timeout: u64,
     pub ui_directory: PathBuf,
+    pub wifi_device: String,
 }
 
 pub fn get_config() -> Config {
