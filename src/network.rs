@@ -382,7 +382,7 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_ifaddr(ifa_name: &str) -> Option<std::net::IpAddr> {
+fn get_ifaddr(ifa_name: &str) -> Option<IpAddr> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
         match ifaddr.address {
@@ -400,7 +400,7 @@ fn get_ifaddr(ifa_name: &str) -> Option<std::net::IpAddr> {
             },
         }
     }
-    return None;
+    None;
 }
 
 fn get_access_points(device: &Device) -> Result<Vec<AccessPoint>> {
