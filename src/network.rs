@@ -279,7 +279,7 @@ impl NetworkCommandHandler {
                 },
             }
         } else {
-            warn!("Access point not found: '{}'" ssid);
+            warn!("Access point not found: '{}'", ssid);
         }
         self.access_points = get_access_points(&self.device)?;
 
