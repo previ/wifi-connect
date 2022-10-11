@@ -70,12 +70,12 @@ impl NetworkCommandHandler {
 
         let device_if_addr = get_ifaddr(&*config.wifi_device);
 
-        let mut portal_connection = None;
         let mut access_points = Vec::new();
+        let mut portal_connection = None;
 
         if device_if_addr.is_none() {
-            portal_connection = Some(create_portal(&device, config)?);
             access_points = get_access_points(&device)?;
+            portal_connection = Some(create_portal(&device, config)?);
         }
 
         let dnsmasq = start_dnsmasq(config, &device)?;
