@@ -160,7 +160,7 @@ pub fn start_server(
     chain.link_after(RedirectMiddleware);
     chain.link_around(cors_middleware);
 
-    let address = format!("{}:{}", gateway_clone, listening_port);
+    let address = format!("localhost:{}", listening_port);
 
     info!("Starting HTTP server on {}", &address);
 
