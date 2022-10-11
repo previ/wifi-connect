@@ -388,7 +388,7 @@ fn get_ifaddr(ifa_name: &str) -> Option<sockaddr_in> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
         match ifaddr.address {
-            Some(SockAddr::Inet((InetAddr::V4(sockaddr_in)))) => {
+            Some(SockAddr::Inet(InetAddr::V4(sockaddr_in))) => {
                 if ifaddr.interface_name == ifa_name {
                     println!("address {}", sockaddr_in);
                     return Some(sockaddr_in);
