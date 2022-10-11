@@ -393,6 +393,9 @@ fn get_ifaddr(ifa_name: &str) -> Option<InetAddr> {
                     return Some(inetaddr);
                 }
             },
+            _  => {
+                println!("unbound to IP");
+            },
             None => {
                 println!(
                     "interface {} with unsupported address family",
