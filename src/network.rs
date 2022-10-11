@@ -67,13 +67,13 @@ impl NetworkCommandHandler {
 
         let device = find_device(&manager, &config.interface)?;
 
-        let device_sock_addr = get_ifaddr(&*config.wifi_device);
-        println!("device ip: {:?}", device_sock_addr);
+        let device_if_addr = get_ifaddr(&*config.wifi_device);
+        println!("device ip: {:?}", device_if_addr);
 
         let mut portal_connection = None;
         let mut access_points = Vec::new();
 
-        if device_sock_addr.is_none() {
+        if device_if_addr.is_none() {
             portal_connection = Some(create_portal(&device, config)?);
             access_points = get_access_points(&device)?;
         }
@@ -383,14 +383,14 @@ fn find_wifi_managed_device(devices: Vec<Device>) -> Result<Option<Device>> {
     Ok(None)
 }
 
-fn get_ifaddr(ifa_name: &str) -> Option<SockAddr> {
+fn get_ifaddr(ifa_name: &str) -> Option<InetAddr> {
     let addrs = getifaddrs().unwrap();
     for ifaddr in addrs {
-        match ifaddr.address::InetAddr {
-            Some(address) => {
-                println!("interface {} address {}", ifaddr.interface_name, address);
+        match ifaddr.address {
+            SockAddr::Inet(inetaddr) => {
+                println!("interface {} address {}", ifaddr.interface_name, inetaddr);
                 if ifaddr.interface_name == ifa_name {
-                    return Some(address);
+                    return Some(inetaddr);
                 }
             },
             None => {
