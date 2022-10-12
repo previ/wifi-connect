@@ -289,18 +289,14 @@ impl NetworkCommandHandler {
     }
 
     fn disconnect(&mut self, ssid: &str) -> Result<bool> {
-        info!("disconnect.1");
         delete_existing_connections_to_same_network(&self.manager, ssid);
 
         thread::sleep(Duration::from_secs(1));
 
-        info!("disconnect.2");
         self.access_points = get_access_points(&self.device)?;
 
-        info!("disconnect.3");
         self.portal_connection = Some(create_portal(&self.device, &self.config)?);
 
-        info!("disconnect.4");
         Ok(false)
     }
 }
