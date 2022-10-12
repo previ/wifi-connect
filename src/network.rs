@@ -191,7 +191,7 @@ impl NetworkCommandHandler {
                         //return Ok(());
                     }
                 },
-                NetworkCommand::Disconnect { ssid } => { self.disconnect(&ssid) },
+                NetworkCommand::Disconnect { ssid } => self.disconnect(&ssid),
             }
         }
     }
