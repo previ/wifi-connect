@@ -192,9 +192,7 @@ impl NetworkCommandHandler {
                     }
                 },
                 NetworkCommand::Disconnect { ssid } => {
-                    if self.disconnect(&ssid)? {
-                        //return Ok(());
-                    }
+                    self.disconnect(&ssid)
                 },
             }
         }
@@ -292,6 +290,8 @@ impl NetworkCommandHandler {
         info!("disconnect.1");
         delete_existing_connections_to_same_network(&self.manager, ssid);
 
+        thread::sleep(Duration::from_secs(1));
+        
         info!("disconnect.2");
         self.access_points = get_access_points(&self.device)?;
 
