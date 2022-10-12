@@ -188,12 +188,12 @@ impl NetworkCommandHandler {
                     passphrase,
                 } => {
                     if self.connect(&ssid, &identity, &passphrase)? {
-                        return Ok(());
+                        //return Ok(());
                     }
                 },
                 NetworkCommand::Disconnect { ssid } => {
                     if self.disconnect(&ssid)? {
-                        return Ok(());
+                        //return Ok(());
                     }
                 },
             }
