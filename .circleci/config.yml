@@ -100,39 +100,7 @@ workflows:
               only: /.*/
             tags:
               only: /.*/
-      - aarch64:
-          requires:
-            - test
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
       - rpi:
-          requires:
-            - test
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
-      - armv7hf:
-          requires:
-            - test
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
-      - i386:
-          requires:
-            - test
-          filters:
-            branches:
-              only: /.*/
-            tags:
-              only: /.*/
-      - amd64:
           requires:
             - test
           filters:
