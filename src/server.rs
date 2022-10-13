@@ -141,17 +141,12 @@ pub fn start_server(
     };
 
     let mut router = Router::new();
-    router.get("/", Static::new(ui_directory), "index");
     router.get("/networks", networks, "networks");
     router.post("/connect", connect, "connect");
     router.post("/disconnect", disconnect, "disconnect");
 
     let mut assets = Mount::new();
     assets.mount("/", router);
-    assets.mount("/static", Static::new(&ui_directory.join("static")));
-    assets.mount("/css", Static::new(&ui_directory.join("css")));
-    assets.mount("/img", Static::new(&ui_directory.join("img")));
-    assets.mount("/js", Static::new(&ui_directory.join("js")));
 
     let cors_middleware = CorsMiddleware::with_allow_any();
 
