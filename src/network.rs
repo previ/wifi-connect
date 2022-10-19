@@ -197,11 +197,7 @@ impl NetworkCommandHandler {
                         //return Ok(());
                     }
                 },
-                NetworkCommand::Scan => {
-                    if self.scan()? {
-                        //return Ok(());
-                    }
-                },
+                NetworkCommand::Scan => { self.scan() },
             }
         }
     }
@@ -315,6 +311,8 @@ impl NetworkCommandHandler {
         self.access_points = get_access_points(&self.device)?;
 
         self.portal_connection = Some(create_portal(&self.device, &self.config)?);
+
+        Ok(false)
     }
 }
 
