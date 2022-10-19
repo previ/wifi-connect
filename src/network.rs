@@ -197,7 +197,7 @@ impl NetworkCommandHandler {
                         //return Ok(());
                     }
                 },
-                NetworkCommand::Scan => { self.scan() },
+                NetworkCommand::Scan => self.scan(),
             }
         }
     }
