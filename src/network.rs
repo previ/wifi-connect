@@ -304,7 +304,7 @@ impl NetworkCommandHandler {
         Ok(false)
     }
 
-    fn scan(&mut self) -> ExitResult {
+    fn scan(&mut self) -> Result<bool> {
         if let Some(ref connection) = self.portal_connection {
             stop_portal(connection, &self.config)?;
         }
@@ -312,7 +312,9 @@ impl NetworkCommandHandler {
 
         self.access_points = get_access_points(&self.device)?;
 
-        self.portal_connection = Some(create_portal(&self.device, &self.config)?)
+        self.portal_connection = Some(create_portal(&self.device, &self.config)?);
+
+        Ok(false)
     }
 }
 
