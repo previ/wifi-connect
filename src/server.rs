@@ -144,6 +144,7 @@ pub fn start_server(
     router.get("/networks", networks, "networks");
     router.post("/connect", connect, "connect");
     router.post("/disconnect", disconnect, "disconnect");
+    router.post("/scan", scan, "scan");
 
     let mut assets = Mount::new();
     assets.mount("/", router);
@@ -229,6 +230,20 @@ fn disconnect(req: &mut Request) -> IronResult<Response> {
     let request_state = get_request_state!(req);
 
     let command = NetworkCommand::Disconnect { ssid: ssid };
+
+    if let Err(e) = request_state.network_tx.send(command) {
+        exit_with_error(&request_state, e, ErrorKind::SendNetworkCommandConnect)
+    } else {
+        Ok(Response::with(status::Ok))
+    }
+}
+
+fn scan(req: &mut Request) -> IronResult<Response> {
+    info!("Scan for networks");
+
+    let request_state = get_request_state!(req);
+
+    let command = NetworkCommand::Scan;
 
     if let Err(e) = request_state.network_tx.send(command) {
         exit_with_error(&request_state, e, ErrorKind::SendNetworkCommandConnect)

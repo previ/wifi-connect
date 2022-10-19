@@ -33,6 +33,7 @@ pub enum NetworkCommand {
     Disconnect {
         ssid: String,
     },
+    Scan,
 }
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
@@ -196,6 +197,11 @@ impl NetworkCommandHandler {
                         //return Ok(());
                     }
                 },
+                NetworkCommand::Scan => {
+                    if self.scan()? {
+                        //return Ok(());
+                    }
+                },
             }
         }
     }
@@ -298,6 +304,17 @@ impl NetworkCommandHandler {
         self.portal_connection = Some(create_portal(&self.device, &self.config)?);
 
         Ok(false)
+    }
+
+    fn scan(&mut self) -> ExitResult {
+        if let Some(ref connection) = self.portal_connection {
+            stop_portal(connection, &self.config)?;
+        }
+        self.portal_connection = None;
+
+        self.access_points = get_access_points(&self.device)?;
+
+        self.portal_connection = Some(create_portal(&self.device, &self.config)?);
     }
 }
 
